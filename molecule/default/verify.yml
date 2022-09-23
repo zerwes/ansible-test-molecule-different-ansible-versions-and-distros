@@ -1,0 +1,9 @@
+---
+- name: verify
+  hosts: all
+  vars:
+  gather_facts: false
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true

@@ -1,0 +1,32 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: debian:bullseye
+    dockerfile: Dockerfile.j2
+    privileged: true
+    #command: /lib/systemd/systemd
+    override_command: false
+    #volumes:
+    #  - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    tmpfs:
+      - /run
+      - /run/lock
+      - /tmp
+    capabilities:
+      - SYS_ADMIN
+    security_opts:
+      - seccomp=unconfined
+    # cgroup-parent: docker.slice
+    # cgroupns: private
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      instance:
+        required_ansible_version: "${required_ansible_version}"
+
+verifier:
+  name: ansible

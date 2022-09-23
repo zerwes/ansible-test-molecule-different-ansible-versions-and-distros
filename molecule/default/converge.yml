@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-test-molecule-different-ansible-versions"
+      include_role:
+        name: "ansible-test-molecule-different-ansible-versions"
