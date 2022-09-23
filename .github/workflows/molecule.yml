@@ -1,0 +1,47 @@
+# vim: tabstop=2 expandtab shiftwidth=2 softtabstop=2 smartindent nu
+---
+name: molecule test
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "10 6 * * 1"
+jobs:
+  ansible6:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install test dependencies.
+        run: pip3 install "ansible==6.2.0" "ansible-core==2.13.2" "molecule[docker,lint]" yamllint ansible-lint requests
+
+      - name: run molecule tests
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          required_ansible_version: '2.13.2'
+  ansible-legacy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install test dependencies.
+        run: pip3 install "ansible==2.9.27" "molecule[docker,lint]" yamllint ansible-lint requests
+
+      - name: run molecule tests
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          required_ansible_version: '2.9.27'
