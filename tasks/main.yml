@@ -1,0 +1,8 @@
+---
+- name: print ansible version
+  ansible.builtin.debug:
+    msg: "{{ ansible_version.full }}"
+
+- name: check ansible version
+  ansible.builtin.assert:
+    that: "ansible_version.full is version_compare('{{ required_ansible_version }}', '==')"
