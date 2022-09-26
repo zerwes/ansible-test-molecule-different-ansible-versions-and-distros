@@ -10,3 +10,17 @@ main goal is to test a role with the latest ansible version (6 at the time of wr
 
 ## workflow
 [.github/workflows/molecule.yml](.github/workflows/molecule.yml)
+
+## caveats
+in some cases you might need to add
+```diff
+ ---
+ - name: Converge
+   hosts: all
++  vars:
++    ansible_python_interpreter: /usr/bin/python3
+   tasks:
+     - name: "Include ansible-test-molecule-different-ansible-versions"
+       include_role:
+```
+to your molecule playbooks for the legacy test, as the interpreter detection has changed between the versions ...
