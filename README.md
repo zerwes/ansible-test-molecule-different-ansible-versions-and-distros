@@ -1,9 +1,9 @@
-[![ansible-lint](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions/actions/workflows/lint.yml/badge.svg)](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions/actions/workflows/lint.yml)
-[![molecule test](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions/actions/workflows/molecule.yml/badge.svg)](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions/actions/workflows/molecule.yml)
+[![ansible-lint](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions-and-distros/actions/workflows/lint.yml/badge.svg)](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions-and-distros/actions/workflows/lint.yml)
+[![molecule test](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions-and-distros/actions/workflows/molecule.yml/badge.svg)](https://github.com/zerwes/ansible-test-molecule-different-ansible-versions-and-distros/actions/workflows/molecule.yml)
 
 :exclamation: this repository is only intended as an example and for demonstration purposes
 
-# ansible-test-molecule-different-ansible-versions
+# ansible-test-molecule-different-ansible-versions-and-distros
 test ansible role with different ansible versions using molecule as a github action
 
 ## scope
@@ -21,7 +21,7 @@ in some cases you might need to add
 +  vars:
 +    ansible_python_interpreter: /usr/bin/python3
    tasks:
-     - name: "Include ansible-test-molecule-different-ansible-versions"
+     - name: "Include ansible-test-molecule-different-ansible-versions-and-distros"
        include_role:
 ```
 to your molecule playbooks for the legacy test, as the interpreter detection has changed between the versions ...
