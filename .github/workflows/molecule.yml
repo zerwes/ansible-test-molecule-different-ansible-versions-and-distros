@@ -48,7 +48,7 @@ jobs:
           - distro: debian10
             did: debian
             codename: buster
-          - distro: ubuntu2004
+          - distro: ubuntu2204
             did: ubuntu
             codename: jammy
           - distro: ubuntu2004
