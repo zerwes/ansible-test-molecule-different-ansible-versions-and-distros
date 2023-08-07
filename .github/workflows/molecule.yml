@@ -7,8 +7,48 @@ on:
   schedule:
     - cron: "10 6 * * 1"
 jobs:
-  ansible6:
+  molecule:
+    name: test
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # max-parallel: 3
+      matrix:
+        ansible:
+          - ansible62
+          - ansible29
+        distro:
+          - debian12
+          - debian11
+          - debian10
+          - ubuntu2204
+          - ubuntu2004
+          - ubuntu1804
+        include:
+          - ansible: ansible62
+            pip3deps: '"ansible==6.2.0" "ansible-core==2.13.2" molecule "molecule-plugins[docker]" yamllint ansible-lint'
+            required_ansible_version: '2.13.2'
+          - ansible: ansible29
+            pip3deps: '"ansible==2.9.27" "molecule[docker,lint]==3.2.3" "yamllint==1.24.2" "ansible-lint==4.2.0"'
+            required_ansible_version: '2.9.27'
+          - distro: debian12
+            did: debian
+            codename: bookworm
+          - distro: debian11
+            did: debian
+            codename: bullseye
+          - distro: debian10
+            did: debian
+            codename: buster
+          - distro: ubuntu2004
+            did: ubuntu
+            codename: jammy
+          - distro: ubuntu2004
+            did: ubuntu
+            codename: focal
+          - distro: ubuntu1804
+            did: ubuntu
+            codename: bionic
     steps:
       - uses: actions/checkout@v2
 
@@ -18,32 +58,13 @@ jobs:
           python-version: 3.9
 
       - name: Install test dependencies.
-        run: pip3 install "ansible==6.2.0" "ansible-core==2.13.2" molecule "molecule-plugins[docker]" yamllint ansible-lint
+        run: pip3 install ${{ matrix.pip3deps }}
 
       - name: run molecule tests
         run: molecule test
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
-          required_ansible_version: '2.13.2'
-  ansible-legacy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-
-      - name: Install test dependencies.
-        run: |
-          pip3 uninstall ansible ansible-lint ansible-core ansible-compat
-          pip3 install "ansible==2.9.27" "molecule[docker,lint]==3.2.3" "yamllint==1.24.2" "ansible-lint==4.2.0"
-
-      - name: run molecule tests
-        run: molecule test
-        env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          required_ansible_version: '2.9.27'
+          required_ansible_version: ${{ matrix.required_ansible_version }}
+          MOLECULE_DISTRO: ${{ matrix.did }}
+          MOLECULE_DISTROCODENAME: ${{ matrix.codename }}
