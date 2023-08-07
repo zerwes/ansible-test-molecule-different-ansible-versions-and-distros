@@ -15,6 +15,7 @@ jobs:
       # max-parallel: 3
       matrix:
         ansible:
+          - ansible74
           - ansible62
           - ansible29
         distro:
@@ -25,6 +26,9 @@ jobs:
           - ubuntu2004
           - ubuntu1804
         include:
+          - ansible: ansible74
+            pip3deps: '"ansible==7.4.0" "ansible-core==2.14.5" molecule "molecule-plugins[docker]" yamllint ansible-lint'
+            required_ansible_version: '2.14.5'
           - ansible: ansible62
             pip3deps: '"ansible==6.2.0" "ansible-core==2.13.2" molecule "molecule-plugins[docker]" yamllint ansible-lint'
             required_ansible_version: '2.13.2'
