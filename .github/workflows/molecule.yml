@@ -31,7 +31,7 @@ jobs:
             pip3deps: '"ansible==8.2.0" "ansible-core==2.15.2" molecule "molecule-plugins[docker]" yamllint ansible-lint'
             required_ansible_version: '2.15.2'
           - ansible: ansible74
-            pip3deps: '"ansible==7.4.0" "ansible-core==2.14.5" molecule "molecule-plugins[docker]" yamllint ansible-lint ansible-compat<4.1.7'
+            pip3deps: '"ansible==7.4.0" "ansible-core==2.14.5" molecule "molecule-plugins[docker]" yamllint ansible-lint "ansible-compat<4.1.7"'
             required_ansible_version: '2.14.5'
           - ansible: ansible62
             pip3deps: '"ansible==6.2.0" "ansible-core==2.13.2" molecule "molecule-plugins[docker]" yamllint ansible-lint'
